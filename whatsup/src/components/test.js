@@ -12,7 +12,7 @@ function NewsList() {
 		const getArticles = async (q) => {
             q = encodeURIComponent(q);
 			const res = await axios.get(
-				`https://newsapi.org/v2/everything?domains=techcrunch.com,thenextweb.com&apiKey=ed07a8d765b6434ca92bc832025d8c49`
+				`https://newsapi.org/v2/everything/apiKey=ed07a8d765b6434ca92bc832025d8c49`
 			);
 			setArticles(res.data.articles);
             console.log(q)

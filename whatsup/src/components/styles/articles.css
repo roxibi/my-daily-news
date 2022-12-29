@@ -1,0 +1,45 @@
+body{
+    background-color: rgb(61, 58, 58);
+}
+
+.article-list{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+width: 70%;
+    padding: 2rem;
+    margin: auto;
+}
+
+.article {
+    margin-bottom: 2rem;
+    padding: 1rem;
+   background-color: aliceblue;
+    max-width: 300px;
+   ;
+}
+
+.article img{
+    max-width: 300px;
+    height: auto;
+
+}
+
+.article  h3 {
+    float: right;
+}
+
+.article-button{
+   background-color: rgb(61, 101, 101);
+   color: aliceblue;
+   border: none;
+   padding: 0.70rem;
+  
+}
+
+.searchbar{
+    display: flex;
+    justify-content: center;
+padding: 2rem;
+    margin: auto;
+}
