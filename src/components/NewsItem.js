@@ -2,13 +2,13 @@ import React from "react";
 import "./styles/articles.css";
 import {
 	BrowserRouter as Router,
-	Link,
 } from "react-router-dom";
 
-function NewsItem({ title, description, url, urlToImage }) {
+function NewsItem({ title, description, url, urlToImage, source, date }) {
 	return (
 		<Router>
 			<div className='article'>
+				
 				<img src={urlToImage} alt='imageofnews' />
 
 				<h3>
@@ -16,14 +16,18 @@ function NewsItem({ title, description, url, urlToImage }) {
 				</h3>
 
 				<p>{description}</p>
-				<div>
-					<button className='article-button'>
-						{" "}
-						<a href={url} target='_blank'>
-							zum Artikel
-						</a>
-					</button>
-				</div>
+
+				<button
+					className='btn-grad'
+					id='card-button'>
+					{" "}
+					<a href={url} target='_blank'>
+						read
+					</a>
+				</button>
+				<div className="card-footer"></div>
+				<p>{source}</p>
+				<p>{date.substring(11, 16)}</p>
 			</div>
 		</Router>
 	);

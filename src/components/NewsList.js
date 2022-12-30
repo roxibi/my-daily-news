@@ -4,6 +4,7 @@ import NewsItem from "./NewsItem";
 
 const getArticles = async (query) => {
 	const res = await axios.get(
+		// TODO: hide API key
 		`https://newsapi.org/v2/${query}&apiKey=ed07a8d765b6434ca92bc832025d8c49`
 	);
 	return res.data.articles;
@@ -17,15 +18,40 @@ function NewsList() {
 	);
 
 	useEffect(() => {
-		// TODO: hide API key
 		getArticles(query).then(setArticles);
 		console.log(articles);
 	}, [query]);
 
 	return (
 		<div>
-			<div>
+			<div className='header'>
+				<div className='logo'>
+					<h1>my news</h1>
+				</div>
+			</div>
+			<div className='buttons'>
 				<button
+					className='btn-grad'
+					onClick={() =>
+						setQuery(
+							"top-headlines?country=us&category=technology"
+						)
+					}>
+					TECH
+				</button>
+
+				<button
+					className='btn-grad'
+					onClick={() =>
+						setQuery(
+							"everything?q=ukraine%20+war%20OR%20krieg"
+						)
+					}>
+					UKR
+				</button>
+
+				<button
+					className='btn-grad'
 					onClick={() =>
 						setQuery(
 							"top-headlines?sources=bbc-news"
@@ -33,28 +59,63 @@ function NewsList() {
 					}>
 					BBC
 				</button>
+
 				<button
+					className='btn-grad'
 					onClick={() =>
-						setQuery("everything?language=ro")
+						setQuery(
+							"everything?q=bonn%20-basketball%20-sport"
+						)
+					}>
+					Bonn
+				</button>
+
+				<button
+					className='btn-grad'
+					onClick={() =>
+						setQuery(
+							"top-headlines?country=us&category=general"
+						)
+					}>
+					US
+				</button>
+
+				<button
+					className='btn-grad'
+					onClick={() =>
+						setQuery(
+							"top-headlines?country=de&category=general"
+						)
+					}>
+					DE
+				</button>
+
+				<button
+					className='btn-grad'
+					onClick={() =>
+						setQuery(
+							"top-headlines?country=ro&category=general&pageSize=100"
+						)
 					}>
 					RO
 				</button>
 			</div>
+
 			<div className='searchbar'>
 				<input
 					type='text'
-					value={searchKey}
 					placeholder='Enter a search word'
-					onChange={(e) =>
-						setSearchKey(e.target.value)
-					}
+					onChange={(e) => {
+						setSearchKey(e.target.value);
+						console.log(searchKey);
+					}}
 				/>
 			</div>
 			<div className='article-list'>
 				{articles
 					.filter(({ description }) => {
 						return searchKey
-							? description
+							? (description || "")
 									.toLowerCase()
 									.includes(
 										(
@@ -70,13 +131,15 @@ function NewsList() {
 							url,
 							urlToImage,
 							source,
+							publishedAt
 						}) => (
 							<NewsItem
 								title={title}
 								description={description}
 								url={url}
 								urlToImage={urlToImage}
-								source={source}
+								source={source.name}
+								date={publishedAt}
 							/>
 						)
 					)}
