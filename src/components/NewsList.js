@@ -2,10 +2,11 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import NewsItem from "./NewsItem";
 
+
 const getArticles = async (query) => {
 	const res = await axios.get(
 		// TODO: hide API key
-		`https://newsapi.org/v2/${query}&apiKey=ed07a8d765b6434ca92bc832025d8c49`
+		`https://newsapi.org/v2/${query}&apiKey=${process.env.REACT_APP_API_KEY}`
 	);
 	return res.data.articles;
 };
