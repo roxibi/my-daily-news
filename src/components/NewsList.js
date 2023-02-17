@@ -20,6 +20,7 @@ function NewsList() {
 	useEffect(() => {
 		getArticles(query).then(setArticles);
 		console.log(articles);
+		// eslint-disable-next-line
 	}, [query]);
 
 	return (
