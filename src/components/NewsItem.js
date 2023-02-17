@@ -18,7 +18,7 @@ function NewsItem({ title, description, url, urlToImage, source, date }) {
 
 				<button className='btn-grad' id='card-button'>
 					{" "}
-					<a href={url} target='_blank'>
+					<a href={url} target='_blank' rel="noreferrer" >
 						read
 					</a>
 				</button>
