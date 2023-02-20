@@ -14,11 +14,12 @@ const options = [
 function NewsListcopy() {
     const [articles, setArticles] = useState([]);
     const [query, setQuery] = useState("top-headlines?country=us&category=technology");
+	const [searchKey, setSearchKey] = useState("");
 
     // const [url, setUrl] = useState("http://localhost:5000/news");
     const getArticles = async () => {
         const encoded = encodeURIComponent(query);
-        const response = await axios.get(`http://localhost:5000/news/${encoded}`);
+        const response = await axios.get(`https://rich-blue-hatchling-sari.cyclic.app/news/${encoded}`);
 
         setArticles(response.data);
         console.log(response.data);
@@ -68,7 +69,7 @@ function NewsListcopy() {
                     </li>
                 </ul> */}
 
-                {/* <div className='searchbar'>
+                <div className='searchbar'>
 				<input
 					type='text'
 					placeholder='Enter a search word'
@@ -77,10 +78,20 @@ function NewsListcopy() {
 						console.log(searchKey);
 					}}
 				/>
-			</div>  */}
+			</div>  
             </div>
             <div className='article-list'>
-                {articles.map(({ title, description, url, urlToImage, source, publishedAt }) => (
+                {articles.filter(({ description }) => {
+						return searchKey
+							? (description || "")
+									.toLowerCase()
+									.includes(
+										(
+											searchKey || ""
+										).toLowerCase()
+									)
+							: true;
+					}).map(({ title, description, url, urlToImage, source, publishedAt }) => (
                     <NewsItem
                         title={title}
                         description={description}
