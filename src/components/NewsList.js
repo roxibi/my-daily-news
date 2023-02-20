@@ -5,8 +5,8 @@ import NewsItem from "./NewsItem";
 
 const getArticles = async (query) => {
 	const res = await axios.get(
-		// TODO: hide API key
-		`https://newsapi.org/v2/${query}&apiKey=${process.env.REACT_APP_API_KEY}`
+		// 
+		'http://localhost:5000/news'
 	);
 	return res.data.articles;
 };
