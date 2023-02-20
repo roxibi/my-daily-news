@@ -2,6 +2,15 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import NewsItem from "./NewsItem";
 
+const options = [
+    { name: "TECH", value: "top-headlines?country=us&category=technology" },
+    { name: "UKR", value: "everything?q=ukraine%20+war%20OR%20krieg" },
+    { name: "BBC", value: "top-headlines?sources=bbc-news" },
+    { name: "BONN", value: "everything?q=bonn%20-basketball%20-sport" },
+    { name: "US", value: "top-headlines?country=us&category=general" },
+    { name: "RO", value: "top-headlines?country=ro&category=general&pageSize=100" },
+];
+
 function NewsListcopy() {
     const [articles, setArticles] = useState([]);
     const [query, setQuery] = useState("top-headlines?country=us&category=technology");
@@ -14,11 +23,12 @@ function NewsListcopy() {
         setArticles(response.data);
         console.log(response.data);
     };
-    
-    useEffect(() => {
-        getArticles(); console.log(articles)
-    }, []);
 
+    useEffect(() => {
+        getArticles();
+        console.log(articles);
+        // eslint-disable-next-line
+    }, [query]);
 
     return (
         <div>
@@ -26,79 +36,39 @@ function NewsListcopy() {
                 <div className='logo'>
                     <h1>my news</h1>{" "}
                 </div>
-                {/* <div className='buttons'> */}
-                {/* <button
-					className='btn-grad'
-					onClick={() =>
-						setQuery(
-							"top-headlines?country=us&category=technology"
-						)
-					}>
-					TECH
-				</button>
+                <div className='buttons'>
+                    {options.map((o) => {
+                        return (
+                            <button key={o.value} className='btn-grad' onClick={() => setQuery(o.value)}>
+                                {o.name}
+                            </button>
+                        );
+                    })}
+                </div>
+                {/* <ul>
+                    <li>
+                        {" "}
+                        Select a Category
+                        <ul className='dropdown'>
+                            {options.map((o) => {
+                                return (
+                                    <li
+                                        className='btn-grad'
+                                        key={o.name}
+                                        value={o.value}
+                                        // eslint-disable-next-line
+                                    >
+                                        <a href='' onClick={() => setQuery(o.value)}>
+                                            {o.name}
+                                        </a>
+                                    </li>
+                                );
+                            })}
+                        </ul>{" "}
+                    </li>
+                </ul> */}
 
-				<button
-					className='btn-grad'
-					onClick={() =>
-						setQuery(
-							"everything?q=ukraine%20+war%20OR%20krieg"
-						)
-					}>
-					UKR
-				</button>
-
-				<button
-					className='btn-grad'
-					onClick={() =>
-						setQuery(
-							"top-headlines?sources=bbc-news"
-						)
-					}>
-					BBC
-				</button>
-
-				<button
-					className='btn-grad'
-					onClick={() =>
-						setQuery(
-							"everything?q=bonn%20-basketball%20-sport"
-						)
-					}>
-					Bonn
-				</button>
-
-				<button
-					className='btn-grad'
-					onClick={() =>
-						setQuery(
-							"top-headlines?country=us&category=general"
-						)
-					}>
-					US
-				</button>
-
-				<button
-					className='btn-grad'
-					onClick={() =>
-						setQuery(
-							"top-headlines?country=de&category=general"
-						)
-					}>
-					DE
-				</button>
-
-				<button
-					className='btn-grad'
-					onClick={() =>
-						setQuery(
-							"top-headlines?country=ro&category=general&pageSize=100"
-						)
-					}>
-					RO
-				</button>
-			</div>
-
-			<div className='searchbar'>
+                {/* <div className='searchbar'>
 				<input
 					type='text'
 					placeholder='Enter a search word'
@@ -107,7 +77,7 @@ function NewsListcopy() {
 						console.log(searchKey);
 					}}
 				/>
-			</div> */}
+			</div>  */}
             </div>
             <div className='article-list'>
                 {articles.map(({ title, description, url, urlToImage, source, publishedAt }) => (
