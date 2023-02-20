@@ -2,12 +2,12 @@
 import './App.css';
 import React from 'react';
 
-import NewsList from './components/NewsList';
+import NewsListcopy from './components/NewsListcopy';
 
 function App() {
   return (
     <div className="App">
-   <NewsList/>
+   <NewsListcopy/>
     </div>
   );
 }

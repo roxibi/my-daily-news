@@ -2,37 +2,32 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import NewsItem from "./NewsItem";
 
+function NewsListcopy() {
+    const [articles, setArticles] = useState([]);
+    const [query, setQuery] = useState("top-headlines?country=us&category=technology");
 
-const getArticles = async (query) => {
-	const res = await axios.get(
-		// 
-		'http://localhost:5000/news'
-	);
-	return res.data.articles;
-};
+    // const [url, setUrl] = useState("http://localhost:5000/news");
+    const getArticles = async () => {
+        const encoded = encodeURIComponent(query);
+        const response = await axios.get(`http://localhost:5000/news/${encoded}`);
 
-function NewsList() {
-	const [articles, setArticles] = useState([]);
-	const [searchKey, setSearchKey] = useState("");
-	const [query, setQuery] = useState(
-		"top-headlines?country=de"
-	);
+        setArticles(response.data);
+        console.log(response.data);
+    };
+    
+    useEffect(() => {
+        getArticles(); console.log(articles)
+    }, []);
 
-	useEffect(() => {
-		getArticles(query).then(setArticles);
-		console.log(articles);
-		// eslint-disable-next-line
-	}, [query]);
 
-	return (
-		<div>
-			<div className='header'>
-				<div className='logo'>
-					<h1>my news</h1>
-				</div>
-			</div>
-			<div className='buttons'>
-				<button
+    return (
+        <div>
+            <div className='header'>
+                <div className='logo'>
+                    <h1>my news</h1>{" "}
+                </div>
+                {/* <div className='buttons'> */}
+                {/* <button
 					className='btn-grad'
 					onClick={() =>
 						setQuery(
@@ -112,42 +107,22 @@ function NewsList() {
 						console.log(searchKey);
 					}}
 				/>
-			</div>
-			<div className='article-list'>
-				{articles
-					.filter(({ description }) => {
-						return searchKey
-							? (description || "")
-									.toLowerCase()
-									.includes(
-										(
-											searchKey || ""
-										).toLowerCase()
-									)
-							: true;
-					})
-					.map(
-						({
-							title,
-							description,
-							url,
-							urlToImage,
-							source,
-							publishedAt
-						}) => (
-							<NewsItem
-								title={title}
-								description={description}
-								url={url}
-								urlToImage={urlToImage}
-								source={source.name}
-								date={publishedAt}
-							/>
-						)
-					)}
-			</div>
-		</div>
-	);
+			</div> */}
+            </div>
+            <div className='article-list'>
+                {articles.map(({ title, description, url, urlToImage, source, publishedAt }) => (
+                    <NewsItem
+                        title={title}
+                        description={description}
+                        url={url}
+                        urlToImage={urlToImage}
+                        source={source.name}
+                        date={publishedAt}
+                    />
+                ))}
+            </div>
+        </div>
+    );
 }
 
-export default NewsList;
+export default NewsListcopy;
